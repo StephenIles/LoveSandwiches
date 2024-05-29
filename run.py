@@ -13,7 +13,6 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('love_sandwiches')
 
 def get_sales_data():
-    
     """
     Get sales figures input from the user
     """
@@ -23,6 +22,25 @@ def get_sales_data():
     print("Example: 10,20,30,40,50,60\n")
     
     data_str = input("Enter your data here: ")
-    print(f"The data provided is {data_str}")
     
+    sales_data = data_str.split(",")
+    validate_data(sales_data)
+    
+    
+def validate_data(values):
+    """
+    Inside the try, converts all string values to intergers,
+    Raises ValueError is strings cannot be converted into int, 
+    or it there aren't axactly 6 values.
+    """
+    try:
+        if len(values) != 6:
+            raise ValueError(
+                f"Exavly 6 values required, you provided {len(values)}"
+            )
+    except ValueError as e:
+        print(F"Invalid data: {e}, please try again.")
+        
+        
+        
 get_sales_data()
